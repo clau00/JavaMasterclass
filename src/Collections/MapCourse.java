@@ -8,41 +8,58 @@ public class MapCourse {
     public static void main(String[] args) {
 
         Map<String, String> languages = new HashMap<>();
-        languages.put("Java", "1 a compiled high level");
-        languages.put("Python", "2 sada asdad");
-        System.out.println(languages.put("Basic", "3 sada asdadsadas dsada"));
-        System.out.println(languages.put("Lisp", "4 3rtg ggrg sada asdad"));
-        languages.put("Algol", "5 qe qweqw esada asdarggd");
+        if(languages.containsKey("Java")){
+            System.out.println("Java is already in the map");
+        }else{
+            languages.put("Java", "a compiled high level, object-oriented, platform independent language");
+            System.out.println("Java added successfully");
+        }
+        languages.put("Python", "an interpreted, object-oriented, high-level programming language with dynamic semantics");
+        languages.put("Algol", "an algorithmic language");
+        System.out.println(languages.put("BASIC", "Beginners All Purposes Symbolic Instruction Code"));
+        System.out.println(languages.put("Lisp", "Therein lies madness"));
 
         if(languages.containsKey("Java")){
-            System.out.println("Java is already in the map.");
-        }else {
-            languages.put("Java", "1.1 fdsfds ge greger");
+            System.out.println("Java is already in the map");
+        }else{
+            languages.put("Java", "this course is about Java");
         }
+        System.out.println(languages.get("Java"));
 
-        System.out.println("========================================");
+        printMap(languages);
 
-        //languages.remove("Lisp");
-        if(languages.remove("Algol", "000  asada dasdad")){
+//        languages.remove("Lisp");
+        if(languages.remove("Algol", "a family of algorithmic languages")){
             System.out.println("Algol removed");
         }else{
-            System.out.println("Algol not removed, key/value pair not found.");
+            System.out.println("Algol not removed, key:value pair not found");
         }
+        printMap(languages);
 
-        System.out.println("========================================");
-        if(languages.replace("Lisp", "This will not work", "121212 3r3432424")){
+        if(languages.remove("Algol", "an algorithmic language")){
+            System.out.println("Algol removed");
+        }else{
+            System.out.println("Algol not removed, key:value pair not found");
+        }
+        printMap(languages);
+
+        System.out.println(languages.replace("Lisp", "a functional programming language with imperative features"));
+        // make sure you update the right information (like the right person's name after he got married)
+        if(languages.replace("Lisp", "This will not work", "a functional programming language with imperative features")){
             System.out.println("Lisp replaced");
         }else{
-            System.out.println("Lisp was not repleaced");
+            System.out.println("Lisp was not replaced");
         }
 
-        //System.out.println(languages.replace("Scala", "99999 sadsda"));
-        System.out.println("========================================");
+        System.out.println(languages.replace("Scala", "this will not be added"));
+        printMap(languages);
+    }
 
-        for(String key : languages.keySet()){
-            System.out.println(key + " : " + languages.get(key));
+    private static void printMap(Map<String, String> map){
+        System.out.println("\n ================================================== ");
+        for(String key: map.keySet()){
+            System.out.println(key + " : " + map.get(key));
         }
-
-
+        System.out.println(" ================================================== \n");
     }
 }
