@@ -1,4 +1,4 @@
-package MapChallengeAdventureGame;
+package Collections.Map.MapChallengeAdventureGame;
 
 import java.util.HashMap;
 import java.util.Map;
