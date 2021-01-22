@@ -29,9 +29,14 @@ public class StockList {
     public int sellStock(String item, int quantity){
         StockItem inStock = list.getOrDefault(item, null);
 
-        if((inStock != null) && (inStock.quantityInStock() >= quantity) && (quantity > 0)){
-            inStock.adjustStock(-quantity);
-            return quantity;
+        if((inStock != null) && (quantity > 0)){
+            if(inStock.quantityInStock() >= quantity) {
+                inStock.adjustStock(-quantity);
+                return quantity;
+            }else{
+                System.out.println("\t There is no item " + item +  " in stock");
+                return -1;
+            }
         }
 
         return -1;
