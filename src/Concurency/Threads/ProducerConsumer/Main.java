@@ -4,6 +4,10 @@ import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static Concurency.Threads.ProducerConsumer.Main.EOF;
@@ -14,13 +18,26 @@ public class Main {
     public static void main(String[] args) {
         List<String> buffer = new ArrayList<>();
         ReentrantLock bufferLock = new ReentrantLock();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+
         MyProducer producer = new MyProducer(buffer, ThreadColor.ANSI_GREEN, bufferLock);
         MyConsumer consumer1 = new MyConsumer(buffer, ThreadColor.ANSI_PURPLE, bufferLock);
         MyConsumer consumer2 = new MyConsumer(buffer, ThreadColor.ANSI_CYAN, bufferLock);
 
-        new Thread(producer).start();
-        new Thread(consumer1).start();
-        new Thread(consumer2).start();
+        executorService.execute(producer);
+        executorService.execute(consumer1);
+        executorService.execute(consumer2);
+
+        Future<String> future = executorService.submit(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                System.out.println(ThreadColor.ANSI_RED + "I'm being printed from the Callable class");
+                return "This is the callable result";
+            }
+        });
+
+        executorService.shutdown();
     }
 }
 
@@ -38,7 +55,7 @@ class MyProducer implements Runnable {
     @Override
     public void run() {
         Random random = new Random();
-        String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+        String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
         for(String num : nums) {
             try {
