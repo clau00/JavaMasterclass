@@ -3,6 +3,7 @@ package LambdaExpressions.Functional_Interfaces;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -45,6 +46,32 @@ public class Main {
         for(int i=0; i<10; i++){
             System.out.println(randomSupplier.get());
         }
+
+        employees.forEach(employee -> {
+            String lastName = employee.getName().substring(employee.getName().indexOf(" ") + 1);
+            System.out.println("Last Name is: " + lastName);
+        });
+
+        Function<Employee, String> getLastName = (Employee employee) -> {
+            return employee.getName().substring(employee.getName().indexOf(' ') + 1);
+        };
+
+        Function<Employee, String> getFirstName = (Employee employee) -> {
+            return employee.getName().substring(0, employee.getName().indexOf(' '));
+        };
+
+        Random random1 = new Random();
+        for(Employee employee : employees){
+            if(random1.nextBoolean()){
+                System.out.println(getAName(getLastName, employee));
+            } else {
+                System.out.println(getAName(getFirstName, employee));
+            }
+        }
+    }
+
+    private static String getAName(Function<Employee, String> getName, Employee employee){
+        return getName.apply(employee);
     }
 
     private static void printEmployees(List<Employee> employees, String ageText, Predicate<Employee> ageCondition) {
