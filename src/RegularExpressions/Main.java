@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //  Introduction, Character Classes and Boundary Matchers
+        //  =========== Introduction, Character Classes and Boundary Matchers ===========
 
         String string = "I am a string. Yes, I am.";
         System.out.println(string);
@@ -51,7 +51,7 @@ public class Main {
         System.out.println(hasWhiteSpace.replaceAll("\\w", "X"));
         System.out.println(hasWhiteSpace.replaceAll("\\b", "_"));
 
-        //  Quantifiers - specify how often an element occurs in a RegExp
+        //  =========== Quantifiers - specify how often an element occurs in a RegExp ===========
 
         String newAlphanumeric = "abcDeeeF12GhhiiijabcDeeeijkl99z";
         System.out.println(newAlphanumeric.replaceAll("^abcDeee", "YYY"));
@@ -65,7 +65,7 @@ public class Main {
         System.out.println(newAlphanumeric.replaceAll("^abcDe{2,5}", "YYY"));
         System.out.println(newAlphanumeric.replaceAll("h+i*j", "_Y_"));
 
-        //  Pattern amd Matcher Classes
+        //  =========== Pattern amd Matcher Classes ===========
 
         StringBuilder htmlText = new StringBuilder("<h1>My Heading</h1>");
         htmlText.append("<h2>Sub-heading</h2>");
@@ -102,7 +102,36 @@ public class Main {
             System.out.println("Occurrence: " + h2TextMatcher.group(2));
         }
 
+        //  =========== AND, OR, NOT ===========
 
+        // "abc" means "a" and "b" and "c"
+        // [Hh]arry
+        System.out.println("harry".replaceAll("[H|h]arry", "Larry"));
+        System.out.println("Harry".replaceAll("[H|h]arry", "Larry"));
+
+        // [^abc]
+        String tvTest = "tstvtkt";
+//        String tNotVRegExp = "t[^v]";
+        String tNotVRegExp = "t(?!v)";
+        Pattern tNotVPattern = Pattern.compile(tNotVRegExp);
+        Matcher tNotVMatcher = tNotVPattern.matcher(tvTest);
+
+        count = 0;
+        while(tNotVMatcher.find()){
+            count++;
+            System.out.println("Occurrence " + count + " : " + tNotVMatcher.start() + " to " + tNotVMatcher.end());
+        }
+
+        String usTelephoneTegExp = "^([\\(]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{4})$";
+        String phone1 = "12345677890";
+        String phone2 = "(123) 456-7890";
+        String phone3 = "123 456-7890";
+        String phone4 = "(123)  456-7890";
+
+        System.out.println("phone1 = " + phone1.matches(usTelephoneTegExp));
+        System.out.println("phone2 = " + phone2.matches(usTelephoneTegExp));
+        System.out.println("phone3 = " + phone3.matches(usTelephoneTegExp));
+        System.out.println("phone4 = " + phone4.matches(usTelephoneTegExp));
     }
 }
 
