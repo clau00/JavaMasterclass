@@ -43,6 +43,8 @@ public class Main {
             System.out.println("Artist: " + songArtist.getSongArtist() + ", Album: " + songArtist.getAlbumName() + ", Track: " + songArtist.getTrack());
         }
 
+        datasource.querySongsMetadata();
+
         datasource.close();
     }
 
