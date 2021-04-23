@@ -6,6 +6,7 @@ import Databases.MusicDB.model.SongArtist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -49,6 +50,21 @@ public class Main {
         System.out.println("Number of songs is: " + numSongs);
 
         datasource.createViewForSOngArtists();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a title: ");
+        String title = scanner.nextLine();
+
+        List<SongArtist> songArtistsList = datasource.querySongInfoView(title);
+        if(songArtistsList.isEmpty()) {
+            System.out.println("No artist for the song!");
+            return;
+        }
+        for(SongArtist songArtist : songArtistsList) {
+            System.out.println("FROM VIEW - Artist: " + songArtist.getSongArtist() + ", Album: " + songArtist.getAlbumName() + ", Track: " + songArtist.getTrack());
+        }
+
+        datasource.insertSong("Touch of Grey", "Grateful Dead", "In The Dark", 1);
 
         datasource.close();
     }
